@@ -69,7 +69,9 @@ void main() {
       );
       final res = await adapter.read(const ReadSpec(targets: ['/x']));
       expect(res.items.single.envelope, isNull);
-      expect(res.items.single.error?.code, 'exec.failed');
+      // 0.2.0 maps HTTP status codes to canonical IoError codes;
+      // 503 → 'server.unavailable'.
+      expect(res.items.single.error?.code, 'server.unavailable');
       expect(res.items.single.error?.message, contains('503'));
     });
 
@@ -273,7 +275,8 @@ void main() {
       await Future<void>.delayed(const Duration(milliseconds: 30));
       await sub.cancel();
       expect(errors, isNotEmpty);
-      expect((errors.first as IoError).code, 'exec.failed');
+      // 0.2.0 maps 500 → 'server.internal' via HttpStatusToIoError.
+      expect((errors.first as IoError).code, 'server.internal');
     });
 
     test('cancel stops the polling timer', () async {

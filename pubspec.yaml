@@ -1,6 +1,6 @@
 name: mcp_io_http
 description: HTTP REST adapter for mcp_io. GET/read, POST/PUT/PATCH/DELETE/execute, polling subscribe.
-version: 0.1.0
+version: 0.2.0
 homepage: https://app-appplayer.github.io/makemind
 repository: https://github.com/app-appplayer/mcp_io_http
 issue_tracker: https://github.com/app-appplayer/mcp_io_http/issues
@@ -16,9 +16,12 @@ environment:
   sdk: ^3.7.2
 
 dependencies:
-  mcp_io: ^0.1.0
+  mcp_io: ^0.2.0
   mcp_bundle: ^0.3.0
   meta: ^1.15.0
+  # Pure-Dart HTTP/2 client — single TLS connection multiplexes
+  # streams (production transport for high-RPS REST APIs).
+  http2: ^2.3.0
 
 dev_dependencies:
   lints: ^5.0.0
